@@ -5,6 +5,8 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
+RUN apt-get update && apt-get install -y curl
+
 COPY pyproject.toml poetry.lock ./
 RUN pip install poetry && poetry install --no-dev
 

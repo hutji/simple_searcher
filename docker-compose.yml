@@ -1,20 +1,37 @@
-name: simple_searcher
+version: '3.8'
 
 services:
   web:
     build: .
+    container_name: simple_searcher_web
     ports:
       - "8080:8080"
     environment:
-      - ELASTICSEARCH_URL=http://localhost:9200
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
       - DATABASE_URL=sqlite+aiosqlite:///documents.db
     depends_on:
       - elasticsearch
+    networks:
+      - esnet
 
   elasticsearch:
-    image: elasticsearch:7.10.1
+    image: elasticsearch:8.15.0
+    container_name: simple_searcher_elasticsearch
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
       - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - esnet
 
+volumes:
+  esdata:
+
+networks:
+  esnet:
+    driver: bridge
