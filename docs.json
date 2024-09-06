@@ -1,0 +1,73 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Simple Searcher",
+      "version": "1.0.0",
+      "description": "API for searching and deleting documents"
+    },
+    "paths": {
+      "/search": {
+        "get": {
+          "summary": "Search documents",
+          "description": "Search documents by text query",
+          "parameters": [
+            {
+              "name": "q",
+              "in": "query",
+              "description": "Text query to search for",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of documents",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer" },
+                        "rubrics": { "type": "array", "items": { "type": "string" } },
+                        "text": { "type": "string" },
+                        "created_date": { "type": "string", "format": "date-time" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request if query parameter is missing"
+            }
+          }
+        }
+      },
+      "/documents/{id}": {
+        "delete": {
+          "summary": "Delete document",
+          "description": "Delete document by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the document to delete",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Document deleted successfully"
+            }
+          }
+        }
+      }
+    }
+  }
