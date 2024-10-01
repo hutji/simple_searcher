@@ -46,7 +46,6 @@ curl -X DELETE "http://localhost:8080/documents/1"
 * #### aiohttp
 * #### aiohttp-swagger
 * #### aiosqlite
-* #### aiosqlite
 * #### sqlalchemy
 * #### elasticsearch
 * #### poetry
